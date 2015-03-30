@@ -1,0 +1,10 @@
+#!/bin/sh
+
+case "${1}" in
+	hibernate|suspend)
+        service cb-hddledd stop; sleep 1
+		;;
+	resume|thaw)
+        service cb-hddledd start
+		;;
+esac

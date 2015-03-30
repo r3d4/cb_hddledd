@@ -1,0 +1,80 @@
+                       cb-hddledd release 0.10
+                     (a HDD LED for Chromebook)
+
+     Written & maintained by Henrik Schondorff <henrik97@gmx.de>
+
+    Copyright 2015, Henrik Schondorff.This software is distributed
+    under a BSD-style license.  Please see the file LICENSE in the
+    distribution for terms of use and redistribution.
+
+
+BLURB
+
+    Turns your Chromebook Power-LED into an dual LED for indication of
+    HDD activity.
+
+DESCRIPTION
+
+    Although Chromebooks are beautiful devices to use as Linux notebook,
+    they are lacking some features you normally found on a PC, like e.g.
+    HDD-LED, which comes quite handy to notice abnormal system behavior.
+
+    So this tool will simply turn your blue power LED into and combined
+    dual color HDD-/POWER-LED. On HDD activity it turn to orange other-
+    wise it stays blue, like original. Its intended to run in background
+    as daemon. There are severals command line options, have a look at
+    "cb_hddled -h" for help.
+
+    Technically it works by polling the /proc/diskstats to track disk
+    activity. On activity it talks to embedded controller (EC) and sends
+    LED change color commands. As option (-g) the program can use GPIO
+    commands to toggle the LEDs. This might be faster, but for this the
+    write protection screw has to be removed, so this is not recommended.
+
+    Its tested only on Intel Hashwell based Chromebooks with TI-LM4 EC
+    controller. As ist uses standards commands for EC communication this
+    should works with other types of Chromebooks also.
+
+REQUIREMENTS
+
+    There are no special dependencies, a minimal build system should
+    be enough.
+        $ sudo apt-get install build-essential
+
+    As it uses direct hardware access the program has to be run as root.
+    If you specify the -g option for GPIO access to LED the system has
+    to be unlock, means the write protection screw has to be removed.
+
+INSTALLATION
+
+    Extract archive to working folder
+        $ tar -xzvf cb_hddled.tar.gz
+        $ cd cb_hddled
+
+    Build it
+        $ cd src/
+        $ make
+
+    Test it by running as console program.
+        $ sudo ./cb-hddledd -c
+
+    If it works as expected you can install it as daemon to start at
+    system startup. The daemon understands some parameters, look at
+    'cb-hddledd -h' for more info.
+        $ cd ../scripts/
+        $ sudo cp cb-hddledd /usr/sbin/
+        $ sudo cp scripts/cb-hddledd /etc/init.d
+        $ sudo update-rc.d cb-hddledd defaults
+
+    For correct indication of suspend state its important to shutdown
+    the daemon on entering system suspend mode.
+        $ sudo cp scripts/05_hddled_suspend /etc/pm/sleep.d
+
+HOMEPAGE AND SOURCE REPOSITORY
+
+    t.b.d.
+
+THANKS
+
+    Thanks to Google for providing the ectool utility which is the basis
+    for stuff like this.
