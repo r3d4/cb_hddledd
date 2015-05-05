@@ -37,6 +37,10 @@ DESCRIPTION
 
 REQUIREMENTS
 
+    Please not the following instructions are tested on Ubuntu 14.04. If
+    you are using a different distribution than Ubuntu/Debian you might
+    need small adjustments depending on your distribution.
+
     There are no special dependencies, a minimal build system should
     be enough.
         $ sudo apt-get install build-essential
@@ -61,14 +65,14 @@ INSTALLATION
     If it works as expected you can install it as daemon to start at
     system startup. The daemon understands some parameters, look at
     'cb-hddledd -h' for more info.
-        $ cd ../scripts/
         $ sudo cp cb-hddledd /usr/sbin/
-        $ sudo cp scripts/cb-hddledd /etc/init.d
+        $ cd ../scripts/
+        $ sudo cp cb-hddledd /etc/init.d
         $ sudo update-rc.d cb-hddledd defaults
 
     For correct indication of suspend state its important to shutdown
     the daemon on entering system suspend mode.
-        $ sudo cp scripts/05_hddled_suspend /etc/pm/sleep.d
+        $ sudo cp 05_hddled_suspend /etc/pm/sleep.d
 
 HOMEPAGE AND SOURCE REPOSITORY
 
